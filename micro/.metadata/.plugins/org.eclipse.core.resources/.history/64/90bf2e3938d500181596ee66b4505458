@@ -1,0 +1,104 @@
+package com.yangrui.micro.config;
+
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.core.io.PathResource;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.yangrui.util.file.PathUtil;
+
+import redis.clients.jedis.JedisPoolConfig;
+
+@Configuration
+@EnableTransactionManagement
+@ComponentScan(value="com.yangrui.micro",excludeFilters= {
+		@Filter(type=FilterType.ANNOTATION,classes= {Controller.class})
+})
+@MapperScan({"com.yangrui.micro.*.dao"})
+public class RootConfig {
+
+	
+	@Bean
+	public CommonsMultipartResolver multipartResolver() throws IOException {
+		CommonsMultipartResolver resolver=new CommonsMultipartResolver();
+		resolver.setDefaultEncoding("utf-8");
+		resolver.setUploadTempDir(new PathResource(PathUtil.systemPath()));
+		return resolver;
+	}
+	
+	@Bean
+	public DataSource dataSource() throws Exception {
+		ComboPooledDataSource dataSource=new ComboPooledDataSource();
+		dataSource.setUser("root");
+		dataSource.setPassword("134167");
+		dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/microblog?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC");
+		dataSource.setDriverClass("com.mysql.jdbc.Driver");
+		dataSource.setMaxPoolSize(3);
+		dataSource.setMinPoolSize(1);
+		dataSource.setCheckoutTimeout(1000);
+		dataSource.setAutoCommitOnClose(false);
+		return dataSource;
+	}
+	@Bean
+	public SqlSessionFactoryBean sqlSessionFactoryBean() throws Exception {
+		SqlSessionFactoryBean sqlSessionFactoryBean=new SqlSessionFactoryBean();
+		sqlSessionFactoryBean.setDataSource(dataSource());
+		Properties properties=new Properties();
+		properties.setProperty("useGeneratedKeys", "true");
+		properties.setProperty("useColumnLabel", "true");
+		properties.setProperty("mapUnderscoreToCamelCase", "true");
+		//properties.setProperty("sqlmapper", "classpath:mapper/*Dao.xml");
+		sqlSessionFactoryBean.setConfigurationProperties(properties);
+		//sqlSessionFactoryBean.setMapperLocations(new Resource[]{resource});
+		return sqlSessionFactoryBean;
+	}
+	@Bean
+	public DataSourceTransactionManager transactionManager() throws Exception {
+		DataSourceTransactionManager transactionManager=new DataSourceTransactionManager(dataSource());
+		return transactionManager;
+	}
+	
+	@Bean
+	public JedisPoolConfig jedisPoolConfig() {
+		JedisPoolConfig jedisPoolConfig=new JedisPoolConfig();
+		jedisPoolConfig.setMaxIdle(10);
+		jedisPoolConfig.setMinIdle(4);
+		jedisPoolConfig.setMaxWaitMillis(1000);
+		jedisPoolConfig.setTestOnBorrow(true);
+		
+		return jedisPoolConfig;
+	}
+	
+	@Bean
+	public JedisConnectionFactory jedisConnectionFactory() {
+		JedisConnectionFactory jedisConnectionFactory=new JedisConnectionFactory();
+		jedisConnectionFactory.setHostName("127.0.0.1");
+		jedisConnectionFactory.setPassword("134167");
+		jedisConnectionFactory.setPort(6379);
+		jedisConnectionFactory.setPoolConfig(jedisPoolConfig());
+		return jedisConnectionFactory;
+	}
+	
+	@Bean
+	public StringRedisTemplate redisTemplate() {
+		StringRedisTemplate  redisTemplate=new StringRedisTemplate();
+		redisTemplate.setConnectionFactory(jedisConnectionFactory());
+		return redisTemplate;
+	}
+}

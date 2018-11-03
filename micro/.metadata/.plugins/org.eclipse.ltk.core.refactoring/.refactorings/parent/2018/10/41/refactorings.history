@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 7 elements from project &apos;parent&apos;&#x0D;&#x0A;- Original project: &apos;parent&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     parent/src/main/java&#x0D;&#x0A;     parent/src/main/resources&#x0D;&#x0A;     parent/src/test/java&#x0D;&#x0A;     parent/src/test/resources&#x0D;&#x0A;     src&#x0D;&#x0A;     target&#x0D;&#x0A;     pom.xml" description="Delete elements" element1="src" element2="target" element3="pom.xml" element4="/src\/test\/resources" element5="/src\/test\/java" element6="/src\/main\/resources" element7="/src\/main\/java" elements="4" flags="589830" id="org.eclipse.jdt.ui.delete" resources="3" stamp="1539071898531" subPackages="false" version="1.0"/>
+</session>

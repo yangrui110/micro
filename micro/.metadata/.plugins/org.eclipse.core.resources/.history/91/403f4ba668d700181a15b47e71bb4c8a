@@ -1,0 +1,5 @@
+package com.yangrui.micro.article.controller;
+
+public class LabelController {
+
+}

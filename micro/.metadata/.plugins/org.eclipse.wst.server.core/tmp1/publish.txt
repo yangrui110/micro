@@ -1,0 +1,8 @@
+#Tomcat publish data
+#Wed Oct 24 17:13:11 CST 2018
+org.eclipse.jst.jee.server\:microApi=E\:\\userData\\tomcat8.5\\wtpwebapps\\microApi
+org.eclipse.jst.j2ee.server\:util=E\:\\userData\\tomcat8.5\\wtpwebapps\\microApi\\WEB-INF\\lib\\util.jar
+org.eclipse.jst.j2ee.server\:article=E\:\\userData\\tomcat8.5\\wtpwebapps\\microApi\\WEB-INF\\lib\\article.jar
+org.eclipse.jst.j2ee.server\:banner=E\:\\userData\\tomcat8.5\\wtpwebapps\\microApi\\WEB-INF\\lib\\banner.jar
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Administrator\\.m2\\repository\\org\\springframework\\spring-web\\5.1.0.RELEASE\\spring-web-5.1.0.RELEASE.jar=E\:\\userData\\tomcat8.5\\wtpwebapps\\microApi\\WEB-INF\\lib\\spring-web-5.1.0.RELEASE.jar
+org.eclipse.jst.j2ee.server\:image=E\:\\userData\\tomcat8.5\\wtpwebapps\\microApi\\WEB-INF\\lib\\image.jar

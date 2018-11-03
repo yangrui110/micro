@@ -1,0 +1,48 @@
+package com.yangrui.micro.article.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.yangrui.micro.article.entity.Article;
+
+@Mapper
+public interface ArticleDao {
+
+	@Update("update article as a left join image as i on a.icon=i.id set "+
+				"a.title=#{title},a.content=#{content},icon=#{icon.id},i.src=#{icon.src} where a.id=#{id}")
+	public void update(Article article);
+	
+	@Select("select a.*,t.count as count from article as a left join (select b.article_id as article_id,count(*) as count from comment as b group by b.article_id) as t on a.id=t.article_id order by update_time desc limit #{page},#{size}")
+	@Results(id="article",value={
+		@Result(column="id",property="id"),
+		@Result(column="title",property="title"),
+		@Result(column="summary",property="summary"),
+		@Result(column="content",property="content"),
+		@Result(column="img_id",property="icon",one=@One(select="com.yangrui.micro.image.dao.ImageDao.findById")),
+		@Result(column="labels",property="labels"),
+		@Result(column="author",property="author"),
+		@Result(column="count",property="comment"),
+		@Result(column="update_time",property="updateTime")
+	})
+	public List<Article> findAll(@Param("page") int page,@Param("size")int size);
+	
+	@Insert(value="insert into article(id,content,title,labels,icon,read_num,author) values(#{id},#{content},#{title},#{labels},#{icon.id},#{read_num},#{author})")
+	public void insert(Article article);
+	
+	@Select("select * from article where id=#{id}")
+	@ResultMap(value="article")
+	public Article findById(String id);
+	
+	@Delete("delete from article where id=#{id}")
+	public void deleteById(String id);
+}

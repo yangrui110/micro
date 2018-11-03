@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>table模块快速使用</title>
+  <link rel="stylesheet" th:href="@{/common/layui/css/layui.css}" media="all">
+</head>
+<body>
+ 
+ <a class="layui-btn layui-btn-primary" data-type="addOne">增加</a>
+  <a class="layui-btn layui-btn-primary" data-type="deleteSelect">删除所选</a>
+<table id="demoTable" lay-filter="test"></table>
+
+<script type="text/javascript" th:src="@{/common/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/util.js}"></script>
+<script type="text/javascript" th:src="@{/js/apiClient.js}"></script>
+<script type="text/javascript" th:src="@{/js/date.js}"></script>
+<script type="text/html" id="tool">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+  
+  //第一个实例
+  table.render({
+    elem: '#demoTable'
+    ,url: PathUtils.article.findAll() //数据接口
+  ,response:{
+	  statusCode:200,
+  }
+    ,page: true //开启分页
+    ,cols: [
+    	[ //表头
+      {type:'checkbox',align:'center'}
+      ,{field: 'title', title: '文章标题',align:'center',}
+      ,{field: 'icon', align:'center',title: '图片', templet:function(value){
+    	  if(value.icon!=''&&value.icon!=null)
+    	  return "<img width=60px height=60px src='"+value.icon.src+"'>";
+    	  else return '';
+      }},
+      {field:'updateTime',title:'修改时间',align:'center',templet:function(value){
+			 if(value.updateTime!=null){
+				 var date=new Date(value.updateTime).format("yyyy-MM-dd hh:mm");
+				 return date;
+			 }
+			 return value;
+		 }}
+      ,{field: 'operate',align:'center', title: '操作', toolbar: '#tool'}
+    ]
+    	]
+  });
+  
+  table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+	  var data = obj.data; //获得当前行数据
+	 var layEvent=obj.event;
+	  if(layEvent === 'detail'){ //查看
+	    //do somehing
+	  } else if(layEvent === 'del'){ //删除
+	    layer.confirm('真的删除行么', function(index){
+	      //obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+	      layer.close(index);
+	      //向服务端发送删除指令
+	      apiClient.deleteArticleById(data.id,function(data){
+	    	  console.log("数据删除成功");
+	    	//执行重载
+	          table.reload('demoTable', {
+	            page: {
+	              curr: location.hash.replace('#!fenye=', '') //获取起始页
+	              ,hash: 'fenye' //重新从第 1 页开始
+	            }
+	          });
+	      });
+	    });
+	  } else if(layEvent === 'edit'){ //编辑
+	    //do something
+		window.location.href=PathUtils.article.editorUrl(data.id);
+	  }
+	});
+  var $ = layui.$, active = {
+		 deleteSelect: function(){ //获取选中数据
+	      var checkStatus = table.checkStatus('demoTable')
+	      ,data = checkStatus.data;
+	      //已经获取到全部的数据
+	      alert(JSON.stringify(data));
+	      apiClient.deleteArticleSelect(JSON.stringify(data),function(data){
+	    	  alert(JSON.stringify(data));
+	    	//执行重载
+	          table.reload('demoTable', {
+	            page: {
+	              curr: location.hash.replace('#!fenye=', '') //获取起始页
+	              ,hash: 'fenye' //重新从第 1 页开始
+	            }
+	          });
+	      });
+	    },
+	    addOne: function(){window.location.href= PathUtils.article.addOne();}
+	   
+	  };
+	  
+	  $('.layui-btn').on('click', function(){
+	    var type = $(this).data('type');
+	    active[type] ? active[type].call(this) : '';
+	  });
+});
+</script>
+</body>
+</html>

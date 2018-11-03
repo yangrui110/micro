@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>layui.form小例子</title>
+<link rel="stylesheet" th:href="@{/common/layui/css/layui.css}" media="all">
+</head>
+<body>
+<form class="layui-form" lay-filter="amd"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+  
+  <input name="id" th:value="${banner.id}==null?'':${banner.id}" style="display: none">
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">序号</label>
+    <div class="layui-input-block">
+      <input type="text" name="sort" placeholder="请输入序号" autocomplete="off" class="layui-input" th:value="${banner.sort}==null?'':${banner.sort}">
+    </div>
+  </div>
+<div class="layui-form-item">
+    <label class="layui-form-label">背景图片</label>
+    <div class="layui-input-block">
+    	<img id="bannerImg" th:src="${banner.image}==null?'http://localhost:8282/upload/1234567.jpg':'http://localhost:8282'+${banner.image.src}" style="width:200px;height: 200px;"/>
+    	<input style="display: none" name="src" th:value="${banner.image}==null?'/upload/1234567.jpg':${banner.image.src}">
+    	<input style="display: none;" name="imgId" th:value="${banner.image}==null?'':${banner.image.id}">
+    	<button type="button" class="layui-btn" id="test1">
+		  <i class="layui-icon">&#xe67c;</i>上传图片
+		</button>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="sub">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+  <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+</form>
+<script type="text/javascript" th:src="@{/common/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/util.js}"></script>
+<script type="text/javascript" th:src="@{/js/apiClient.js}"></script>
+<script>
+layui.use(['form','upload'], function(){
+  var form = layui.form;
+  var upload = layui.upload;
+  //各种基于事件的操作，下面会有进一步介绍
+  
+  var uploadInst = upload.render({
+	    elem: '#test1' //绑定元素
+	    ,url: PathUtils.upload() //上传接口
+	    ,field:'file'
+	    ,multiple:true
+	    ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+	        layer.load(); //上传loading
+	      }
+	    ,done: function(res){
+	    	layer.closeAll('loading');
+	      $("#bannerImg").attr("src",PathUtils.preUrl()+res.data.path);
+	      $("input[name='src']").val(res.data.path);
+	      alert("上传成功"+JSON.stringify(res));
+	    }
+	    ,error: function(){
+	      //请求异常回调
+	    	layer.closeAll('loading');
+	    }
+	  });
+  form.on('submit(sub)', function(data){
+	  console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+	  console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+	  console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+	  data.field.image={"src":data.field.src,"id":data.field.imgId}
+	  var a=JSON.stringify(data.field);
+	  apiClient.updateBanner(JSON.stringify(data.field),function(data){
+		  window.location.href=PathUtils.banner.listUrl();
+	  });
+	  return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+	});
+});
+
+function init(){
+	var image='[[banner.image]]';
+	if(image!=''&&image==null){
+		$("input[name='imgId']").val(image.id);
+		$("input[name='src']").val(image.src);
+	}
+}
+
+</script>

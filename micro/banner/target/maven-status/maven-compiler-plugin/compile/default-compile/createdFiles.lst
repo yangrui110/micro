@@ -1,0 +1,4 @@
+com\yangrui\micro\banner\entity\Banner.class
+com\yangrui\micro\banner\serviceImpl\BannerServiceImpl.class
+com\yangrui\micro\banner\dao\BannerDao.class
+com\yangrui\micro\banner\service\BannerService.class

@@ -1,0 +1,3 @@
+/microblog/banner/bannerList,GET
+/microblog/login,GET
+/microblog/verify,GET

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+<typeInfo handle="=banner/src\/main\/java&lt;com.yangrui.micro.banner.service{BannerService.java[BannerService" modifiers="513" timestamp="1539235771387"/>
+<typeInfo handle="=article/C:\/Users\/Administrator\/.m2\/repository\/org\/springframework\/spring-web\/5.1.0.RELEASE\/spring-web-5.1.0.RELEASE.jar&lt;org.springframework.web.filter(OncePerRequestFilter.class[OncePerRequestFilter" modifiers="1057" timestamp="1538712658119"/>
+<typeInfo handle="=microApi/C:\/Users\/Administrator\/.m2\/repository\/javax\/servlet\/servlet-api\/2.5\/servlet-api-2.5.jar&lt;javax.servlet(Filter.class[Filter" modifiers="1537" timestamp="1526021718858"/>
+<typeInfo handle="=article/C:\/Users\/Administrator\/.m2\/repository\/org\/springframework\/spring-webmvc\/5.1.0.RELEASE\/spring-webmvc-5.1.0.RELEASE.jar&lt;org.springframework.web.servlet.handler(DispatcherServletWebRequest.class[DispatcherServletWebRequest" modifiers="33" timestamp="1538712658562"/>
+<typeInfo handle="=article/C:\/Users\/Administrator\/.m2\/repository\/org\/springframework\/spring-webmvc\/5.1.0.RELEASE\/spring-webmvc-5.1.0.RELEASE.jar&lt;org.springframework.web.servlet.support(AbstractAnnotationConfigDispatcherServletInitializer.class[AbstractAnnotationConfigDispatcherServletInitializer" modifiers="1057" timestamp="1538712658562"/>
+<typeInfo handle="=article/C:\/Users\/Administrator\/.m2\/repository\/org\/mybatis\/mybatis\/3.4.6\/mybatis-3.4.6.jar&lt;org.apache.ibatis.type(BaseTypeHandler.class[BaseTypeHandler" modifiers="1057" timestamp="1538712988796"/>
+<typeInfo handle="=article/src\/main\/java&lt;com.yangrui.micro.article.service{ArticleLabelService.java[ArticleLabelService" modifiers="513" timestamp="1539604978690"/>
+<typeInfo handle="=article/src\/main\/java&lt;com.yangrui.micro.article.dao{ArticleDao.java[ArticleDao" modifiers="513" timestamp="1540357290756"/>
+<typeInfo handle="=microblog/C:\/Users\/Administrator\/.m2\/repository\/com\/alibaba\/fastjson\/1.2.51\/fastjson-1.2.51.jar&lt;com.alibaba.fastjson.support.spring(FastJsonHttpMessageConverter.class[FastJsonHttpMessageConverter" modifiers="33" timestamp="1538733020337"/>
+</typeInfoHistroy>

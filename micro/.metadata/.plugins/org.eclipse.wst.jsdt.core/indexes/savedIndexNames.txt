@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+F:\softData\eclipse\MicroBlog\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+550505321.index
+596735075.index
+615335842.index
+654836600.index
+19657255.index
+2814126161.index
+2319829849.index

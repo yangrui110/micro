@@ -1,0 +1,5 @@
+package com.yangrui.micro.article.statics;
+
+public class StickyStatus {
+
+}

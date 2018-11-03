@@ -1,0 +1,4 @@
+com\yangrui\micro\banner\controller\BannerController.class
+com\yangrui\micro\config\RootConfig.class
+com\yangrui\micro\config\WebConfig.class
+com\yangrui\micro\config\MvcConfig.class

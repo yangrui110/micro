@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="microApi"/>
+<aop-project name="microblog"/>
+<aop-project name="banner"/>
+<aop-project name="image"/>
+<aop-project name="article"/>
+<aop-project name="util"/>
+<aop-project name="user"/>
+</aop-reference-model>

@@ -1,0 +1,25 @@
+package com.yangrui.micro.article.convert;
+
+import java.util.List;
+
+import com.yangrui.micro.article.entity.Article;
+import com.yangrui.micro.article.vo.ArticleVo;
+
+public class ArticleConvert {
+
+	public static List<ArticleVo> convertArticleList(List<Article> lists){
+		return null;
+	}
+	
+	public static ArticleVo convertArticleOne(Article article) {
+		return null;
+	}
+	
+	public static List<Article> convertArticleVoList(List<ArticleVo> lists){
+		return null;
+	}
+	
+	public static Article convertArticleVoOne(ArticleVo articleVo) {
+		return null;
+	}
+}

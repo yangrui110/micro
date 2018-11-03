@@ -1,0 +1,7 @@
+package com.yangrui.micro.config;
+
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+
+public class CustomerFastJsonHttpMessageConvert extends FastJsonHttpMessageConverter {
+
+}

@@ -1,0 +1,4 @@
+com\yangrui\micro\image\dao\ImageDao.class
+com\yangrui\micro\image\service\ImageService.class
+com\yangrui\micro\image\entity\Image.class
+com\yangrui\micro\image\serviceImpl\ImageServiceImpl.class
